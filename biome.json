@@ -10,9 +10,9 @@
 		"ignore": []
 	},
 	"formatter": {
-		"enabled": false,
+		"enabled": true,
 		"indentStyle": "space",
-		"indentWidth" : 2,
+		"indentWidth": 2,
 		"lineWidth": 80
 	},
 	"organizeImports": {
@@ -27,9 +27,9 @@
 	"javascript": {
 		"formatter": {
 			"quoteStyle": "single",
-			"semicolons" : "asNeeded",
-			"arrowParentheses" : "asNeeded",
-			"jsxQuoteStyle" : "double",
+			"semicolons": "asNeeded",
+			"arrowParentheses": "asNeeded",
+			"jsxQuoteStyle": "double",
 			"trailingComma": "es5"
 		}
 	}
