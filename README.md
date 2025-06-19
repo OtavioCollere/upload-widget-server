@@ -1,8 +1,10 @@
 # upload-widget-server
 
+- criar readme
+
 <h2>Upload Widget Server</h2>
 
-# badge nao sei oque é, 
+# badge 
 
 #descricao suscinta
 oque faz o app
