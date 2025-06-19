@@ -1,51 +1,43 @@
-import { db, pg } from '@/infra/db'
-import { schema } from '@/infra/db/schema'
-import { uploadFileToStorage } from '@/infra/storage/upload-file-to-storage'
-import { makeRight, type Either } from '@/shared/either'
-import { stringify } from 'csv-stringify'
-import { ilike } from 'drizzle-orm'
 import { PassThrough, Transform } from 'node:stream'
 import { pipeline } from 'node:stream/promises'
-import { z } from 'zod'
+import { db, pg } from '@/infra/db'
 
-const exportUploadInput = z.object({
+import { uploadFileToStorage } from '@/infra/storage/upload-file-to-storage'
+import { stringify } from 'csv-stringify'
+import { ilike } from 'drizzle-orm'
+import { z } from 'zod'
+import { makeRight, type Either } from '@/shared/either'
+import { schema } from '@/infra/db/schema'
+
+const exportUploadsInput = z.object({
   searchQuery: z.string().optional(),
-  sortBy: z.enum(['createdAt']).optional(),
-  sortDirection: z.enum(['asc', 'desc']).optional(),
-  page: z.number().optional().default(1),
-  pageSize: z.number().optional().default(20),
 })
 
-type ExportUploadInput = z.input<typeof exportUploadInput>
+type ExportUploadsInput = z.input<typeof exportUploadsInput>
 
-type ExportUploadOutput = {
+type ExportUploadsOutput = {
   reportUrl: string
 }
 
 export async function exportUploads(
-  input: ExportUploadInput
-): Promise<Either<never, ExportUploadOutput>> {
-  const { searchQuery } = exportUploadInput.parse(input)
+  input: ExportUploadsInput
+): Promise<Either<never, ExportUploadsOutput>> {
+  const { searchQuery } = exportUploadsInput.parse(input)
 
   const { sql, params } = db
     .select({
       id: schema.uploads.id,
       name: schema.uploads.name,
-      remoteKey: schema.uploads.remoteKey,
       remoteUrl: schema.uploads.remoteUrl,
       createdAt: schema.uploads.createdAt,
     })
     .from(schema.uploads)
     .where(
-      searchQuery ? ilike(schema.uploads.name, `%${searchQuery}`) : undefined
+      searchQuery ? ilike(schema.uploads.name, `%${searchQuery}%`) : undefined
     )
     .toSQL()
 
-  const cursor = pg.unsafe(sql, params as string[]).cursor(1)
-
-  // for await (const rows of cursor) {
-  //   console.log(rows)
-  // }
+  const cursor = pg.unsafe(sql, params as string[]).cursor(2)
 
   const csv = stringify({
     delimiter: ',',
@@ -68,6 +60,7 @@ export async function exportUploads(
         for (const chunk of chunks) {
           this.push(chunk)
         }
+
         callback()
       },
     }),
@@ -84,7 +77,5 @@ export async function exportUploads(
 
   const [{ url }] = await Promise.all([uploadToStorage, convertToCSVPipeline])
 
-  return makeRight({
-    reportUrl: url,
-  })
+  return makeRight({ reportUrl: url })
 }

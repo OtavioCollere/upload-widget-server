@@ -1,11 +1,10 @@
-import { db } from '@/infra/db'
-import { schema } from '@/infra/db/schema'
-import { uploads } from '@/infra/db/schema/uploads'
-import { makeLeft, makeRight, type Either } from '@/shared/either'
 import { Readable } from 'node:stream'
+import { db } from '@/infra/db'
+import { uploadFileToStorage } from '@/infra/storage/upload-file-to-storage'
 import { z } from 'zod'
 import { InvalidFileFormat } from './errors/invalid-file-format'
-import { uploadFileToStorage } from '@/infra/storage/upload-file-to-storage'
+import { makeLeft, makeRight, type Either } from '@/shared/either'
+import { schema } from '@/infra/db/schema'
 
 const uploadImageInput = z.object({
   fileName: z.string(),
@@ -17,14 +16,9 @@ type UploadImageInput = z.input<typeof uploadImageInput>
 
 const allowedMimeTypes = ['image/jpg', 'image/jpeg', 'image/png', 'image/webp']
 
-export async function uploadImage(input: UploadImageInput): Promise<
-  Either<
-    InvalidFileFormat,
-    {
-      url: string
-    }
-  >
-> {
+export async function uploadImage(
+  input: UploadImageInput
+): Promise<Either<InvalidFileFormat, { url: string }>> {
   const { contentStream, contentType, fileName } = uploadImageInput.parse(input)
 
   if (!allowedMimeTypes.includes(contentType)) {
@@ -44,7 +38,5 @@ export async function uploadImage(input: UploadImageInput): Promise<
     remoteUrl: url,
   })
 
-  return makeRight({
-    url,
-  })
+  return makeRight({ url })
 }

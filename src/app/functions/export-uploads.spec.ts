@@ -1,10 +1,10 @@
 import { randomUUID } from 'node:crypto'
+import { exportUploads } from '@/app/functions/export-uploads'
 import { getUploads } from '@/app/functions/get-uploads'
 import * as upload from '@/infra/storage/upload-file-to-storage'
 import { makeUpload } from '@/test/factories/make-upload'
 import dayjs from 'dayjs'
 import { describe, expect, it, vi } from 'vitest'
-import { exportUploads } from './export-upload'
 import { isRight, unwrapEither } from '@/shared/either'
 
 describe('export uploads', () => {

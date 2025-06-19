@@ -4,7 +4,7 @@ import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import { z } from 'zod'
 
 export const getUploadsRoute: FastifyPluginAsyncZod = async server => {
-  server.post(
+  server.get(
     '/uploads',
     {
       schema: {

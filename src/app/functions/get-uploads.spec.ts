@@ -117,6 +117,10 @@ describe('get uploads', () => {
       sortDirection: 'asc',
     })
 
+    console.log(namePattern) // Verifique o padrão de nome utilizado na busca
+    console.log(upload1, upload2, upload3, upload4, upload5) // Verifique se os uploads estão sendo criados corretamente
+    console.log(unwrapEither(sut).total)
+
     expect(isRight(sut)).toBe(true)
     expect(unwrapEither(sut).total).toEqual(5)
     expect(unwrapEither(sut).uploads).toEqual([
