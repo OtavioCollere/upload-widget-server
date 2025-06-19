@@ -11,10 +11,10 @@ export async function makeUpload(
   const result = await db
     .insert(schema.uploads)
     .values({
-      ...overrides,
       name: fileName,
       remoteKey: `images/${fileName}`,
       remoteUrl: `http://example.com/images/${fileName}`,
+      ...overrides,
     })
     .returning()
 
