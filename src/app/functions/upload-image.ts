@@ -1,10 +1,10 @@
 import { Readable } from 'node:stream'
 import { db } from '@/infra/db'
+import { schema } from '@/infra/db/schema'
+import { type Either, makeLeft, makeRight } from '@/infra/shared/either'
 import { uploadFileToStorage } from '@/infra/storage/upload-file-to-storage'
 import { z } from 'zod'
 import { InvalidFileFormat } from './errors/invalid-file-format'
-import { makeLeft, makeRight, type Either } from '@/shared/either'
-import { schema } from '@/infra/db/schema'
 
 const uploadImageInput = z.object({
   fileName: z.string(),

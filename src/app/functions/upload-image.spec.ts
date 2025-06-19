@@ -3,10 +3,10 @@ import { Readable } from 'node:stream'
 import { InvalidFileFormat } from '@/app/functions/errors/invalid-file-format'
 import { uploadImage } from '@/app/functions/upload-image'
 import { db } from '@/infra/db'
+import { schema } from '@/infra/db/schema'
+import { isLeft, isRight, unwrapEither } from '@/infra/shared/either'
 import { eq } from 'drizzle-orm'
 import { beforeAll, describe, expect, it, vi } from 'vitest'
-import { isLeft, isRight, unwrapEither } from '@/shared/either'
-import { schema } from '@/infra/db/schema'
 
 describe('upload image', () => {
   beforeAll(() => {

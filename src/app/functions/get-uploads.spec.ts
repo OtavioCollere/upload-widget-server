@@ -1,9 +1,9 @@
 import { randomUUID } from 'node:crypto'
 import { getUploads } from '@/app/functions/get-uploads'
+import { isRight, unwrapEither } from '@/infra/shared/either'
 import { makeUpload } from '@/test/factories/make-upload'
 import dayjs from 'dayjs'
 import { describe, expect, it } from 'vitest'
-import { isRight, unwrapEither } from '@/shared/either'
 
 describe('get uploads', () => {
   it('should be able to get the uploads', async () => {
@@ -116,10 +116,6 @@ describe('get uploads', () => {
       sortBy: 'createdAt',
       sortDirection: 'asc',
     })
-
-    console.log(namePattern) // Verifique o padrão de nome utilizado na busca
-    console.log(upload1, upload2, upload3, upload4, upload5) // Verifique se os uploads estão sendo criados corretamente
-    console.log(unwrapEither(sut).total)
 
     expect(isRight(sut)).toBe(true)
     expect(unwrapEither(sut).total).toEqual(5)
