@@ -62,6 +62,7 @@ Configure os **paths** no `tsconfig` para permitir importar usando `@/`:
 "paths": {
   "@/*": ["./src/*"]
 }
+```
 
 # 🧪 Setup de Testes com Vitest
 
@@ -69,6 +70,8 @@ Configure os **paths** no `tsconfig` para permitir importar usando `@/`:
 
 ```bash
 npm install -D vitest vite-tsconfig-paths dotenv-cli
+```
+
 vitest: ferramenta de testes.
 
 vite-tsconfig-paths: permite que o Vitest entenda os aliases definidos com @/asterisco no tsconfig.json.
