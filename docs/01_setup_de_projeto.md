@@ -63,11 +63,6 @@ Configure os **paths** no `tsconfig` para permitir importar usando `@/`:
   "@/*": ["./src/*"]
 }
 
-Claro! Aqui está o bloco completo pronto para colar como .md:
-
-markdown
-Copiar
-Editar
 # 🧪 Setup de Testes com Vitest
 
 ## 📦 Instalações necessárias
@@ -80,15 +75,4 @@ vite-tsconfig-paths: permite que o Vitest entenda os aliases definidos com @/ast
 
 dotenv-cli: usado para carregar variáveis de ambiente no contexto de teste, já que o Vitest não tem suporte nativo à flag --env-file como o Node.
 
-# 🧪 Setup de Testes com Vitest
 
-## 📦 Instalações necessárias
-
-```bash
-npm install -D vitest vite-tsconfig-paths dotenv-cli
-
-vitest: ferramenta de testes.
-
-vite-tsconfig-paths: permite que o Vitest entenda os aliases definidos com @/astericoso no tsconfig.json.
-
-dotenv-cli: usado para carregar variáveis de ambiente no contexto de teste, já que o Vitest não tem suporte nativo à flag --env-file como o Node.
