@@ -6,7 +6,7 @@
 - Acesse o repositório [`tsconfig/bases`](https://github.com/tsconfig/bases) no GitHub e copie o `tsconfig.json` correspondente à sua versão do Node.
 - Altere a propriedade `moduleResolution` para `"bundler"`, pois **no deploy faremos bundling e publicaremos como JavaScript, não TypeScript**.
 
----
+---<br>
 
 ## 📦 O que é bundling?
 
@@ -19,7 +19,7 @@
 - **Tree shaking**: remove código morto (não utilizado).
 - **Minificação**: reduz tamanho removendo espaços, comentários e renomeando variáveis.
 
----
+---<br>
 
 ## 📚 ECMAScript Modules (ESM)
 
@@ -30,14 +30,14 @@ Bundlers modernos permitem o uso de **ES Modules**, o sistema de módulos padrã
 - Permite importar/exportar entre arquivos usando `import` e `export`.
 - Cada arquivo é um **módulo com escopo próprio**, evitando vazamentos de variáveis no escopo global (como ocorria em `<script>` no HTML).
 
----
+---<br>
 
 ## 🧾 Comandos no `package.json`
 
 Adicione comandos para rodar o projeto diretamente via `ts-node`.  
 **(Não será detalhado aqui, pois é uma etapa básica.)**
 
----
+---<br>
 
 ## 🎯 Target: ESNext
 
@@ -52,7 +52,7 @@ No `tsconfig.json`, altere o `target` para `"ESNext"`.
 
 > ⚠️ Evite `"ESNext"` se precisar rodar em ambientes antigos ou usar libs incompatíveis com ESM.
 
----
+---<br>
 
 ## 🔗 Imports com `@/`
 
@@ -65,17 +65,30 @@ Configure os **paths** no `tsconfig` para permitir importar usando `@/`:
 ```
 
 # 🧪 Setup de Testes com Vitest
-
 ## 📦 Instalações necessárias
 
 ```bash
 npm install -D vitest vite-tsconfig-paths dotenv-cli
-```
-
 vitest: ferramenta de testes.
 
 vite-tsconfig-paths: permite que o Vitest entenda os aliases definidos com @/asterisco no tsconfig.json.
 
 dotenv-cli: usado para carregar variáveis de ambiente no contexto de teste, já que o Vitest não tem suporte nativo à flag --env-file como o Node.
 
+em vitest.config.mjs inserir o bloco de codigo
 
+```
+import { defineConfig } from 'vitest/config'
+import tsconfigPaths from 'vite-tsconfig-paths';
+
+export default defineConfig({
+  plugins: [tsconfigPaths()],
+})
+```
+
+- Essa configuração é por que o vitest não entende os importS / CONFIGURADO no tsconfig, ```"@/*" ```
+
+---<br>
+
+
+# 🧪 Setup de Testes com Vitest
